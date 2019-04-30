@@ -7,66 +7,74 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 
+function init(app) {
+  app.use(helmet());
+  app.use(helmet.noCache());
+
+  app.use(bodyParser.json({limit: '1mb'}));
+  app.use(bodyParser.urlencoded({extended: true }));
+
+  app.use(cors());
+
+  app.use(morgan('combined'));  // log http requests
+
+  app.use(express.static('public'))
+}
+
+function loadRoutes(app) {
+  app.get('/', (req, res) => {
+    res.status(200).send();
+  });
+
+  app.post('/clear', (req, res) => {
+    clearCache();
+    res.send({});
+  });
+
+  app.get('/calls', (req, res) => {
+    res.send({
+      number: data.phoneNumber,
+    });
+  });
+
+  app.get('/data', (req, res) => {
+    res.send({
+      digits: data.digits,
+    });
+  });
+
+  app.get('/alldata', (req, res) => {
+    res.send({
+      data,
+    });
+  });
+
+  app.post('/calls', (req, res) => {
+    const { body } = req;
+    clearCache();
+    data.phoneNumber = body.phone_number;
+
+    res.status(200).send();
+  });
+
+  app.post('/data', (req, res) => {
+    const { body } = req;
+    data.digits = body.digits;
+
+    res.status(200).send();
+  });
+}
+
+const data = {};
+
+function clearCache() {
+  data.phoneNumber = undefined;
+  data.digits = undefined;
+}
+
 const app = express();
-
-const dataCache = {};
-
-app.use(helmet());
-app.use(helmet.noCache());
-
-app.use(bodyParser.json({limit: '1mb'}));
-app.use(bodyParser.urlencoded({extended: true }));
-
-// enable all CORS requests
-app.use(cors());
-
-// log HTTP requests
-app.use(morgan('combined'));
-
-app.use(express.static('public'))
-
-app.get('/', (req, res) => {
-  res.status(200).send();
-});
-
-app.post('/clear', (req, res) => {
-  dataCache.phoneNumber = undefined;
-  dataCache.digits = undefined;
-  res.send({});
-});
-
-app.get('/calls', (req, res) => {
-  res.send({
-    number: dataCache.phoneNumber,
-  });
-});
-
-app.post('/calls', (req, res) => {
-  const { body } = req;
-  dataCache.phoneNumber = body.phone_number;
-  dataCache.digits = undefined;
-  console.log(`Received call from ${body.phone_number}`);
-  res.status(200).send();
-});
-
-app.get('/data', (req, res) => {
-  res.send({
-    digits: dataCache.digits,
-  });
-});
-
-app.post('/data', (req, res) => {
-  const { body } = req;
-  dataCache.digits = body.digits;
-  console.log(`User entered digits ${body.digits}`);
-  res.status(200).send();
-});
-
-app.get('/alldata', (req, res) => {
-  res.send({
-    data: dataCache,
-  });
-});
+init(app);
+loadRoutes(app);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
