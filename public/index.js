@@ -2,7 +2,7 @@ const States = {
   INITIAL: 'INITIAL',
   WAITING_CALL: 'WAITING_CALL',
   ON_CALL: 'ON_CALL',
-  PROMPT_USER: 'PROMPT_USER',
+  PROMPT_CALLER: 'PROMPT_CALLER',
   WAITING_DATA: 'WAITING_DATA',
   HAVE_DATA: 'HAVE_DATA',
 };
@@ -35,7 +35,7 @@ async function run() {
     return;
   }
 
-  if (state === States.PROMPT_USER) {
+  if (state === States.PROMPT_CALLER) {
     await promptCaller()
       .then(() => {
         state = States.WAITING_DATA;
@@ -61,7 +61,7 @@ async function run() {
 }
 
 function promptUser() {
-  state = States.PROMPT_USER;
+  state = States.PROMPT_CALLER;
   run();
 }
 
