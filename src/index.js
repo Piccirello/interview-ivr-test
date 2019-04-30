@@ -21,6 +21,7 @@ function init(app) {
   app.use(express.static('public'))
 }
 
+// TODO sanitize POST data
 function loadRoutes(app) {
   app.get('/', (req, res) => {
     res.status(200).send();
