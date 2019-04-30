@@ -19,7 +19,7 @@ app.use(helmet.noCache());
 
 // use bodyParser to parse application/json content-type
 app.use(bodyParser.json({limit: '1mb'}));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true }));
 
 // TODO should we make this more strict? only allow app.aiinsurance.io? config: https://github.com/expressjs/cors
 // enable all CORS requests
@@ -33,14 +33,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/calls', (req, res) => {
-  console.log('POST /calls');
-  console.log(req.body);
+  const { body } = req;
+  console.log(`Received call from ${body.phone_number}`);
   res.status(200).send();
 });
 
 app.post('/data', (req, res) => {
-  console.log('POST /data');
-  console.log(req.body);
+  const { body } = req;
+  console.log(`User entered digits ${body.digits}`);
   res.status(200).send();
 });
 
