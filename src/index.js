@@ -27,6 +27,10 @@ app.get('/', (req, res) => {
   res.status(200).send();
 });
 
+app.post('/clear', (req, res) => {
+  dataCache = {};
+});
+
 app.get('/calls', (req, res) => {
   res.send({
     number: dataCache.phoneNumber,
