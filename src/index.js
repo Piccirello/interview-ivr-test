@@ -31,14 +31,14 @@ app.get('/', (req, res) => {
   res.status(200).send();
 });
 
-app.get('/calls', (req, res) => {
-  console.log('GET /calls');
+app.post('/calls', (req, res) => {
+  console.log('POST /calls');
   console.log(req.body);
   res.status(200).send();
 });
 
-app.post('/calls', (req, res) => {
-  console.log('POST /calls');
+app.post('/data', (req, res) => {
+  console.log('POST /data');
   console.log(req.body);
   res.status(200).send();
 });
