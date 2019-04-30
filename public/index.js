@@ -1,4 +1,5 @@
 const States = {
+  INITIAL: 'INITIAL',
   WAITING_CALL: 'WAITING_CALL',
   ON_CALL: 'ON_CALL',
   PROMPT_USER: 'PROMPT_USER',
@@ -12,9 +13,14 @@ const VGSUrl = 'https://vgs-sip.herokuapp.com/v1/secure-calls/to-write/';
 const PollDelay = 1000;
 
 const data = {};
-let state = States.WAITING_CALL;
+let state = States.INITIAL;
 
 async function run() {
+  if (state === States.INITIAL) {
+    await clearData(false);
+    state = States.WAITING_CALL;
+  }
+
   if (state === States.WAITING_CALL) {
     await loadPhoneNumber()
       .then((number) => {
@@ -59,11 +65,14 @@ function promptUser() {
   run();
 }
 
-async function clearData() {
+async function clearData(reload = true) {
   const url = `${AppUrl}/clear`;
   await fetch(url, { method: 'POST' })
     .catch(console.error);
-  window.location.reload();
+
+  if (reload) {
+    window.location.reload();
+  }
 }
 
 async function sleep(ms) {
