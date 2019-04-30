@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
 app.post('/clear', (req, res) => {
   dataCache.phoneNumber = undefined;
   dataCache.digits = undefined;
+  res.send({});
 });
 
 app.get('/calls', (req, res) => {
