@@ -1,0 +1,21 @@
+#onCall {
+  display: none;
+}
+
+button {
+  font-size: 1em;
+}
+
+#collectingData {
+  display: none;
+}
+
+#haveData {
+  display: none;
+}
+
+#clearData {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

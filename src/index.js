@@ -23,6 +23,8 @@ app.use(cors());
 // log HTTP requests
 app.use(morgan('combined'));
 
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
   res.status(200).send();
 });
