@@ -18,12 +18,11 @@ button {
   display: inline-block;
 }
 
-#digits {
+.userData {
   display: inline-block;
 }
 
 #collectingData {
-  display: inline-block;
   position: absolute;
 }
 
