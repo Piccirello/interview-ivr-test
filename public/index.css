@@ -10,8 +10,11 @@ button {
   display: none;
 }
 
-#haveData {
-  display: none;
+#callTimerText {
+  /* margin-left: 5px;
+  margin-top: -10px;
+  margin-bottom: 60ppx; */
+  margin: -10px 0 60px 5px;
 }
 
 #clearData {

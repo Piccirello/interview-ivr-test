@@ -106,6 +106,7 @@ function receivedData(digits) {
 }
 
 function receivedPhoneNumber(number) {
+  updateTimer();
   document.getElementById('phoneNumber').textContent = number;
   document.getElementById('waitingForCall').style.display = 'none';
   document.getElementById('onCall').style.display = 'initial';
@@ -116,6 +117,20 @@ function requestData() {
   document.getElementById('collectingData').style.display = 'initial';
 
   promptCaller();
+}
+
+function updateTimer() {
+  const callStartTime = new Date().getTime();
+  setInterval(() => {
+    const now = new Date().getTime();
+    const elapsedTime = now - callStartTime;
+    const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+
+    const minutesString = (minutes < 10) ? ('0' + minutes) : minutes;
+    const secondsString = (seconds < 10) ? ('0' + seconds) : seconds;
+    document.getElementById('callTimer').textContent = `${minutesString}:${secondsString}`;
+  }, 1000);
 }
 
 run();
