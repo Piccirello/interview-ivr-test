@@ -31,6 +31,18 @@ app.get('/', (req, res) => {
   res.status(200).send();
 });
 
+app.get('/calls', (req, res) => {
+  console.log('GET /calls');
+  console.log(req.body);
+  res.status(200).send();
+});
+
+app.post('/calls', (req, res) => {
+  console.log('POST /calls');
+  console.log(req.body);
+  res.status(200).send();
+});
+
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
