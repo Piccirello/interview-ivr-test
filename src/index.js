@@ -19,6 +19,7 @@ app.use(helmet.noCache());
 
 // use bodyParser to parse application/json content-type
 app.use(bodyParser.json({limit: '1mb'}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // TODO should we make this more strict? only allow app.aiinsurance.io? config: https://github.com/expressjs/cors
 // enable all CORS requests
