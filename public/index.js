@@ -37,11 +37,9 @@ async function run() {
   }
 
   if (state === States.PROMPT_CALLER) {
-    await promptCaller()
-      .then(() => {
-        state = States.WAITING_DATA;
-      })
+    await requestData()
       .catch(async () => await sleep(PollDelay));
+    state = States.WAITING_DATA;
   }
 
   if (state === States.WAITING_DATA) {
@@ -61,12 +59,12 @@ async function run() {
   run();
 }
 
-function promptUser() {
+function promptCaller() {
   state = States.PROMPT_CALLER;
   run();
 }
 
-async function promptCaller() {
+async function requestData() {
   const url = `${VGSUrl}${data.phoneNumber}`;
   return fetch(url);
 }
@@ -101,20 +99,19 @@ async function sleep(ms) {
 
 function receivedData(digits) {
   document.getElementById('digits').textContent = digits;
-  document.getElementById('collectingData').style.display = 'none';
-  document.getElementById('haveData').style.display = 'initial';
+  document.getElementById('collectingData').classList.add('hidden');
 }
 
 function receivedPhoneNumber(number) {
   updateTimer();
   document.getElementById('phoneNumber').textContent = number;
-  document.getElementById('waitingForCall').style.display = 'none';
-  document.getElementById('onCall').style.display = 'initial';
+  document.getElementById('waitingForCall').classList.add('hidden');
+  document.getElementById('onCall').classList.remove('hidden');
 }
 
-function requestData() {
-  document.getElementById('collectData').style.display = 'none';
-  document.getElementById('collectingData').style.display = 'initial';
+function collectData() {
+  document.getElementById('collectData').classList.add('hidden');
+  document.getElementById('collectingData').classList.remove('hidden');
 
   promptCaller();
 }

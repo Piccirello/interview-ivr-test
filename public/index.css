@@ -1,24 +1,58 @@
-#onCall {
-  display: none;
-}
-
 button {
   font-size: 1em;
-}
-
-#collectingData {
-  display: none;
-}
-
-#callTimerText {
-  /* margin-left: 5px;
-  margin-top: -10px;
-  margin-bottom: 60ppx; */
-  margin: -10px 0 60px 5px;
 }
 
 #clearData {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+#callTimerText {
+  margin: -10px 0 60px 5px;
+}
+
+#pinText {
+  margin-left: 5px;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+#digits {
+  display: inline-block;
+}
+
+#collectingData {
+  display: inline-block;
+  position: absolute;
+}
+
+#dataInputDiv {
+  position: relative;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 1500ms infinite;
+  animation: ellipsis steps(4,end) 1500ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.5em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.5em;
+  }
 }

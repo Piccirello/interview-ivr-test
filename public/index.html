@@ -9,23 +9,18 @@
   </head>
   <body>
     <div id="waitingForCall">
-      <h1>Waiting for call...</h1>
+      <h1 class="loading">Waiting for call</h1>
     </div>
 
-    <div id="onCall">
-      <h1 id="onCallText">On call: <span id="phoneNumber"></span></h1>
+    <div id="onCall" class="hidden">
+      <h1>On call: <span id="phoneNumber"></span></h1>
       <h3 id="callTimerText">Active: <span id="callTimer">00:00</span></h3>
 
-      <div id="collectData">
-          <button onclick="requestData()">Collect Data</button>
-      </div>
-
-      <div id="collectingData">
-        <h2>Waiting for user...</h2>
-      </div>
-
-      <div id="haveData">
-        <h2>Data received: <span id="digits"></span></h2>
+      <div id=dataInputDiv>
+        <h2 id="pinText">Pin:</h2>
+        <h2 id="collectingData" class="loading hidden"></h2>
+        <h2 id="digits"></h2>
+        <button id="collectData" onclick="collectData()">Collect Data</button>
       </div>
     </div>
 
