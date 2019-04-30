@@ -26,6 +26,7 @@ async function run() {
       .then((number) => {
         data.phoneNumber = number;
         receivedPhoneNumber(data.phoneNumber);
+
         state = States.ON_CALL;
       })
       .catch(async () => await sleep(PollDelay));
@@ -65,6 +66,25 @@ function promptUser() {
   run();
 }
 
+async function promptCaller() {
+  const url = `${VGSUrl}${data.phoneNumber}`;
+  return fetch(url);
+}
+
+async function loadData() {
+  const url = `${AppUrl}/data`;
+  return fetch(url)
+    .then(resp => resp.json())
+    .then(resp => resp.digits || Promise.reject());
+}
+
+async function loadPhoneNumber() {
+  const url = `${AppUrl}/calls`;
+  return fetch(url)
+    .then(resp => resp.json())
+    .then(resp => resp.number || Promise.reject());
+}
+
 async function clearData(reload = true) {
   const url = `${AppUrl}/clear`;
   await fetch(url, { method: 'POST' })
@@ -95,26 +115,7 @@ function requestData() {
   document.getElementById('collectData').style.display = 'none';
   document.getElementById('collectingData').style.display = 'initial';
 
-  promptUser();
-}
-
-async function promptCaller() {
-  const url = `${VGSUrl}${data.phoneNumber}`;
-  return fetch(url);
-}
-
-async function loadData() {
-  const url = `${AppUrl}/data`;
-  return fetch(url)
-    .then(resp => resp.json())
-    .then(resp => resp.digits || Promise.reject());
-}
-
-async function loadPhoneNumber() {
-  const url = `${AppUrl}/calls`;
-  return fetch(url)
-    .then(resp => resp.json())
-    .then(resp => resp.number || Promise.reject());
+  promptCaller();
 }
 
 run();
