@@ -36,6 +36,7 @@ app.get('/calls', (req, res) => {
 app.post('/calls', (req, res) => {
   const { body } = req;
   dataCache.phoneNumber = body.phone_number;
+  dataCache.digits = undefined;
   console.log(`Received call from ${body.phone_number}`);
   res.status(200).send();
 });
