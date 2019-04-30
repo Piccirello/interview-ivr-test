@@ -28,7 +28,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/clear', (req, res) => {
-  dataCache = {};
+  dataCache.phoneNumber = undefined;
+  dataCache.digits = undefined;
 });
 
 app.get('/calls', (req, res) => {
