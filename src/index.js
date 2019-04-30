@@ -9,6 +9,8 @@ const dotenv = require('dotenv');
 
 const app = express();
 
+const dataCache = {};
+
 app.use(helmet());
 app.use(helmet.noCache());
 
@@ -25,16 +27,36 @@ app.get('/', (req, res) => {
   res.status(200).send();
 });
 
+app.get('/calls', (req, res) => {
+  res.send({
+    number: dataCache.phoneNumber,
+  });
+});
+
 app.post('/calls', (req, res) => {
   const { body } = req;
+  dataCache.phoneNumber = body.phone_number;
   console.log(`Received call from ${body.phone_number}`);
   res.status(200).send();
 });
 
+app.get('/data', (req, res) => {
+  res.send({
+    digits: dataCache.digits,
+  });
+});
+
 app.post('/data', (req, res) => {
   const { body } = req;
+  dataCache.digits = body.digits;
   console.log(`User entered digits ${body.digits}`);
   res.status(200).send();
+});
+
+app.get('/alldata', (req, res) => {
+  res.send({
+    data: dataCache,
+  });
 });
 
 const PORT = process.env.PORT || 8081;
